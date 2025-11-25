@@ -1,3 +1,5 @@
+import { returnToDefaultValues } from '../scripts/index';
+
 export function handleShowPopup(popup) {
     popup.classList.add('popup_is-opened');
     document.addEventListener('keydown', (evt) => handleClosePopupByEscapeKey(evt, popup));
@@ -21,9 +23,4 @@ function handleClosePopupByEscapeKey(evt, popup) {
         handleClosePopup(popup);
         returnToDefaultValues();
     }
-};
-
-function returnToDefaultValues() {
-    document.querySelector('.popup_type_edit').querySelector('.popup__input_type_name').value = document.querySelector('.profile__title').textContent;
-    document.querySelector('.popup_type_edit').querySelector('.popup__input_type_description').value = document.querySelector('.profile__description').textContent;
 };

@@ -1,4 +1,4 @@
-export function createCardElement(data, onDelete, onClick, onLike) {
+export function createCardElement(data, {onDelete, onClick, onLike} = {}) {
     const cardTemplate = document.querySelector('#card-template').content.querySelector('.places__item');
     const cardElement = cardTemplate.cloneNode(true);
     const deleteButton = cardElement.querySelector('.card__delete-button');

@@ -36,39 +36,38 @@ function handleSubmitEditForm(evt) {
     handleClosePopup(editPopup);
 };
 
+function handleOnClickCardImage(evt) {
+    handleShowPopup(placePopup);
+    if (evt.target.classList.contains('card__image')) {
+        placeImageInPopup.src = evt.target.src;
+        placeImageInPopup.alt = evt.target.alt;
+        placeCaptionInPopup.textContent = evt.target.alt;
+    };
+};
+
 function handleSubmitNewCardForm(evt) {
     evt.preventDefault();
-    placesList.prepend(createCardElement({name: placeNameInput.value, link: placeLinkInput.value}, handleDeleteCard, (evt) => {
-        handleShowPopup(placePopup);
-        if (evt.target.classList.contains('card__image')) {
-            placeImageInPopup.src = evt.target.src;
-            placeImageInPopup.alt = evt.target.alt;
-            placeCaptionInPopup.textContent = evt.target.alt;
-        } 
-    }, handleLikeCard));
-    placeNameInput.value = '';
-    placeLinkInput.value = '';
+    placesList.prepend(createCardElement({name: placeNameInput.value, link: placeLinkInput.value}, { onDelete: handleDeleteCard, onClick: handleOnClickCardImage, onLike: handleLikeCard}));
+    newCardForm.reset();
     handleClosePopup(newCardPopup);
 };
 
-initialCards.forEach((data) => {
-    placesList.append(createCardElement(data, handleDeleteCard, (evt) => {
-        handleShowPopup(placePopup);
-        if (evt.target.classList.contains('card__image')) {
-            placeImageInPopup.src = evt.target.src;
-            placeImageInPopup.alt = evt.target.alt;
-            placeCaptionInPopup.textContent = evt.target.alt;
-        } 
-    }, handleLikeCard));
-});
+export function returnToDefaultValues() {
+    nameInput.value = profileTitle.textContent;
+    jobInput.value = profileDescription.textContent;
+};
 
-nameInput.value = profileTitle.textContent;
-jobInput.value = profileDescription.textContent;
+initialCards.forEach((data) => {
+    placesList.append(createCardElement(data, { onDelete: handleDeleteCard, onClick: handleOnClickCardImage, onLike: handleLikeCard}));
+});
 
 editForm.addEventListener('submit', (evt) => handleSubmitEditForm(evt));
 newCardForm.addEventListener('submit', (evt) => handleSubmitNewCardForm(evt));
 
-editButton.addEventListener('click', () => handleShowPopup(editPopup));
+editButton.addEventListener('click', () => { 
+    returnToDefaultValues();
+    handleShowPopup(editPopup);
+});
 addCardButton.addEventListener('click', () => handleShowPopup(newCardPopup));
 
 closeEditPopupButton.addEventListener('click', () => {
