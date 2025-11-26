@@ -1,26 +1,24 @@
-import { returnToDefaultValues } from '../scripts/index';
-
 export function handleShowPopup(popup) {
     popup.classList.add('popup_is-opened');
-    document.addEventListener('keydown', (evt) => handleClosePopupByEscapeKey(evt, popup));
+    const escapeHandler = (evt) => handleClosePopupByEscapeKey(evt, popup);
+    popup._escapeHandler = escapeHandler;
+    document.addEventListener('keydown', escapeHandler);
 };
 
 export function handleClosePopup(popup) {
     popup.classList.remove('popup_is-opened');
-    returnToDefaultValues();
-    document.removeEventListener('keydown', (evt) => handleClosePopupByEscapeKey(evt, popup));
+    if (popup._escapeHandler) {
+        document.removeEventListener('keydown', popup._escapeHandler);
+        popup._escapeHandler = null;
+    }
 };
 
-export function handleClosePopupByOverlay(evt, popup) {
-    if (evt.target === popup) {
-        handleClosePopup(popup);
-        returnToDefaultValues();
-    }
+export function handleClosePopupByOverlay(popup) {
+    handleClosePopup(popup);
 };
 
 function handleClosePopupByEscapeKey(evt, popup) {
     if (evt.key === 'Escape') {
         handleClosePopup(popup);
-        returnToDefaultValues();
     }
 };

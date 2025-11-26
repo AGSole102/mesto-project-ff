@@ -72,16 +72,30 @@ addCardButton.addEventListener('click', () => handleShowPopup(newCardPopup));
 
 closeEditPopupButton.addEventListener('click', () => {
     handleClosePopup(editPopup);
+    returnToDefaultValues();
 });
 closeNewCardPopupButton.addEventListener('click', () => {
     handleClosePopup(newCardPopup);
+    newCardForm.reset();
 });
-closePlacePopupButton.addEventListener('click', () => handleClosePopup(placePopup));
+closePlacePopupButton.addEventListener('click', () => {
+    handleClosePopup(placePopup);
+});
 
 editPopup.addEventListener('click', (evt) => {
-    handleClosePopupByOverlay(evt, editPopup);
+    if (evt.target === editPopup) {
+        handleClosePopupByOverlay(editPopup);
+        returnToDefaultValues();
+    }
 });
 newCardPopup.addEventListener('click', (evt) => {
-    handleClosePopupByOverlay(evt, newCardPopup);
+    if (evt.target === newCardPopup) {
+        handleClosePopupByOverlay(newCardPopup);
+        newCardForm.reset();
+    }
 });
-placePopup.addEventListener('click', (evt) => handleClosePopupByOverlay(evt, placePopup));
+placePopup.addEventListener('click', (evt) => {
+    if (evt.target === placePopup) {
+        handleClosePopupByOverlay(placePopup);
+    }
+});
