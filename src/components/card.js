@@ -50,6 +50,7 @@ export function handleLikeCard(evt) {
     }
     newData.then((res) => {
         cardElement.querySelector('.card__like-count').textContent = res.likes.length;
-    });
-    evt.target.classList.toggle('card__like-button_is-active');
+        evt.target.classList.toggle('card__like-button_is-active');
+    })
+    .catch(err => console.error(err));
 };

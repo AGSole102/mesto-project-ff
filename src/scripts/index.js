@@ -62,12 +62,12 @@ function handleSubmitEditForm(evt, name, about) {
         .then((res) => {
             profileTitle.textContent = res.name;
             profileDescription.textContent = res.about;
+            handleClosePopup(editPopup);
         })
         .catch(err => console.error(err))
         .finally(() => {
             saveInfoButton.textContent = 'Сохранить';
             saveInfoButton.disabled = false;
-            handleClosePopup(editPopup);
         })
 };
 
@@ -87,13 +87,13 @@ function handleSubmitNewCardForm(evt, name, link) {
     addCard(name, link)
         .then((res) => {
             placesList.prepend(createCardElement(res, { onDelete: handleDeleteCard, onClick: handleOnClickCardImage, onLike: handleLikeCard }, personalInfo));
+            newCardForm.reset();
+            handleClosePopup(newCardPopup);
         })
         .catch(err => console.error(err))
         .finally(() => {
             saveNewCardButton.textContent = 'Сохранить';
             saveNewCardButton.disabled = false;
-            newCardForm.reset();
-            handleClosePopup(newCardPopup);
         })
 };
 
@@ -104,13 +104,13 @@ function handleSubmitNewAvatar(evt, link) {
     editAvatar(link)
         .then(() => {
             profileImage.src = link;
+            avatarForm.reset();
+            handleClosePopup(avatarPopup);
         })
         .catch(err => console.error(err))
         .finally(() => {
             saveAvatarButton.textContent = 'Сохранить';
             saveAvatarButton.disabled = false;
-            avatarForm.reset();
-            handleClosePopup(avatarPopup);
         })
 }
 

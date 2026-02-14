@@ -6,21 +6,19 @@ const config = {
     }
 };
 
+function getResponseData(res) {
+    if (res.ok) {
+        return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+}
+
 export function getPersonalInfo() {
     return fetch(`${config.baseUrl}/users/me`, {
         method: "GET",
         headers: config.headers
     })
-    .then((res) => {
-        if (res.ok) {
-            return res.json();
-        }
-        return Promise.reject(`Ошибка при попытке загрузки данных: ${res.status}`);
-    })
-    .then((res) => {
-        return res;
-    })
-    .catch((err) => console.error(err))
+    .then(getResponseData)
 };
 
 export function getCards() {
@@ -28,16 +26,7 @@ export function getCards() {
         method: "GET",
         headers: config.headers
     })
-    .then((res) => {
-        if (res.ok) {
-            return res.json();
-        }
-        return Promise.reject(`Ошибка при попытке загрузки данных: ${res.status}`)
-    })
-    .then((res) => {
-        return res;
-    })
-    .catch((err) => console.error(err))
+    .then(getResponseData)
 };
 
 export function likeCard(cardId) {
@@ -45,16 +34,7 @@ export function likeCard(cardId) {
         method: "PUT",
         headers: config.headers
     })
-    .then((res) => {
-        if (res.ok) {
-            return res.json();
-        }
-        return Promise.reject(`Ошибка при попытке поставить лайк: ${res.status}`)
-    })
-    .then((res) => {
-        return res;
-    })
-    .catch((err) => console.error(err))
+    .then(getResponseData)
 };
 
 export function unlikeCard(cardId) {
@@ -62,16 +42,7 @@ export function unlikeCard(cardId) {
         method: "DELETE",
         headers: config.headers
     })
-    .then((res) => {
-        if (res.ok) {
-            return res.json();
-        }
-        return Promise.reject(`Ошибка при попытке снять лайк: ${res.status}`)
-    })
-    .then((res) => {
-        return res;
-    })
-    .catch((err) => console.error(err))
+    .then(getResponseData)
 };
 
 export function editAvatar(link) {
@@ -82,16 +53,7 @@ export function editAvatar(link) {
             avatar: link
         })
     })
-    .then((res) => {
-        if (res.ok) {
-            return res.json();
-        }
-        return Promise.reject(`Ошибка при попытке редактирования аватара: ${res.status}`)
-    })
-    .then((res) => {
-        return res;
-    })
-    .catch(err => console.error(err))
+    .then(getResponseData)
 };
 
 export function editInfo(name, about) {
@@ -103,16 +65,7 @@ export function editInfo(name, about) {
             about: about
         })
     })
-    .then((res) => {
-        if (res.ok) {
-            return res.json();
-        }
-        return Promise.reject(`Ошибка при попытке редактирования профиля: ${res.status}`)
-    })
-    .then((res) => {
-        return res;
-    })
-    .catch(err => console.error(err))
+    .then(getResponseData)
 }
 
 export function addCard(name, link) {
@@ -124,16 +77,7 @@ export function addCard(name, link) {
             link: link
         })
     })
-    .then((res) => {
-        if (res.ok) {
-            return res.json();
-        }
-        return Promise.reject(`Ошибка при попытке добавления карточки: ${res.status}`)
-    })
-    .then((res) => {
-        return res;
-    })
-    .catch(err => console.error(err))
+    .then(getResponseData)
 }
 
 export function deleteCard(cardId) {
@@ -141,14 +85,5 @@ export function deleteCard(cardId) {
         method: "DELETE",
         headers: config.headers
     })
-    .then((res) => {
-        if (res.ok) {
-            return res.json();
-        }
-        return Promise.reject(`Ошибка при попытке удаления карточки: ${res.status}`)
-    })
-    .then((res) => {
-        return res;
-    })
-    .catch(err => console.error(err))
+    .then(getResponseData)
 }

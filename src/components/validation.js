@@ -31,11 +31,19 @@ function hasInvalidInput(inputList) {
     })
 };
 
+function disableSubmitButton(buttonElement, inactiveButtonClass) {
+    buttonElement.classList.add(inactiveButtonClass);
+};
+
+function enableSubmitButton(buttonElement, inactiveButtonClass) {
+    buttonElement.classList.remove(inactiveButtonClass);
+};
+
 function toggleButtonState(inputList, buttonElement, inactiveButtonClass) {
     if (hasInvalidInput(inputList)) {
-        buttonElement.classList.add(inactiveButtonClass);
+        disableSubmitButton(buttonElement, inactiveButtonClass);
     } else {
-        buttonElement.classList.remove(inactiveButtonClass);
+        enableSubmitButton(buttonElement, inactiveButtonClass);
     }
 };
 
@@ -77,5 +85,5 @@ export function clearValidation(formElement, {formSelector, inputSelector, submi
     inputList.forEach((inputElement) => {
         hideInputError(formElement, inputElement, inputErrorClass, errorClass);
     })
-    toggleButtonState(inputList, buttonElement, inactiveButtonClass);
+    disableSubmitButton(buttonElement, inactiveButtonClass);
 }
